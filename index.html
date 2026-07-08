@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Rincón Pastel ✨</title>
+    <style>
+        /* Variables de color estilo Femboy Pastel */
+        :root {
+            --rosa-pastel: #FFB7B2;
+            --azul-pastel: #B5E2FA;
+            --blanco-puro: #FFFFFF;
+            --fondo-crema: #FFF1F2;
+            --texto-oscuro: #5D576B;
+            --rosa-oscuro: #FF8B94;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--fondo-crema);
+            color: var(--texto-oscuro);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        /* --- PANTALLA DE LOGIN --- */
+        #login-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 400px;
+            background: var(--blanco-puro);
+            border-radius: 30px;
+            padding: 30px 20px;
+            box-shadow: 0 8px 25px rgba(255, 183, 178, 0.4);
+            border: 3px solid var(--rosa-pastel);
+            margin-top: 5vh;
+            text-align: center;
+        }
+
+        #login-screen h2 {
+            font-size: 1.6rem;
+            color: var(--rosa-oscuro);
+            margin-bottom: 20px;
+            border: none;
+        }
+
+        .input-group {
+            width: 100%;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--texto-oscuro);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--azul-pastel);
+            border-radius: 15px;
+            outline: none;
+            font-size: 1rem;
+            color: var(--texto-oscuro);
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--rosa-pastel);
+        }
+
+        .captcha-container {
+            display: flex;
+            align-items: center;
+            background: #f9f9f9;
+            border: 1px solid #d3d3d3;
+            border-radius: 4px;
+            padding: 10px 15px;
+            width: 100%;
+            margin: 15px 0;
+            justify-content: space-between;
+        }
+
+        .captcha-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .captcha-checkbox {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .captcha-text {
+            font-size: 0.95rem;
+            font-family: Roboto, Arial, sans-serif;
+            color: #222;
+        }
+
+        .login-btn {
+            width: 100%;
+            background-color: var(--rosa-pastel);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .login-btn:hover {
+            background-color: var(--rosa-oscuro);
+        }
+
+        .fb-request-btn {
+            display: inline-block;
+            width: 100%;
+            background-color: transparent;
+            color: var(--rosa-oscuro);
+            border: 2px dashed var(--rosa-pastel);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .fb-request-btn:hover {
+            background-color: var(--fondo-crema);
+            border-style: solid;
+        }
+
+        #error-msg {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        #main-content {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            position: relative;
+            text-align: center;
+            margin-bottom: 25px;
+            width: 100%;
+            max-width: 800px;
+            padding-top: 45px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: var(--rosa-oscuro);
+            text-shadow: 2px 2px var(--azul-pastel);
+            margin-bottom: 5px;
+        }
+
+        .logout-btn {
+            position: absolute;
+            right: 50%;
+            transform: translateX(50%);
+            top: 0;
+            background-color: var(--rosa-pastel);
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 183, 178, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--rosa-oscuro);
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            background-color: var(--blanco-puro);
+            padding: 8px 15px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(255, 183, 178, 0.3);
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            padding: 8px 15px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--texto-oscuro);
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav button:hover {
+            background-color: var(--azul-pastel);
+            color: white;
+        }
+
+        nav button.active {
+            background-color: var(--rosa-pastel);
+            color: white;
+        }
+
+        main {
+            width: 100%;
+            max-width: 800px;
+            background: var(--blanco-puro);
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(181, 226, 250, 0.4);
+            border: 3px solid var(--azul-pastel);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--rosa-oscuro);
+            margin-bottom: 15px;
+            border-bottom: 2px dashed var(--azul-pastel);
+            padding-bottom: 6px;
+            display: inline-block;
+            font-size: 1.4rem;
+        }
+
+        /* --- Estilos Sección PERFIL (CORREGIDO PARA LAPTOP/CELULAR) --- */
+        .perfil-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-direction: column; /* Por defecto en cel se ve vertical */
+            text-align: center;
+        }
+
+        .avatar-placeholder {
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0; /* Evita que la foto se distorsione o se aplaste */
+            background-color: var(--azul-pastel);
+            border-radius: 50%;
+            border: 5px solid var(--rosa-pastel);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+        }
+
+        .info-bio {
+            width: 100%;
+        }
+
+        .info-bio p {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        /* --- Estilos Sección FOTOS --- */
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+            gap: 15px;
+        }
+
+        .foto-card {
+            background-color: var(--fondo-crema);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--rosa-pastel);
+            text-align: center;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .foto-card p {
+            margin-top: 10px;
+            font-weight: bold;
+            color: var(--texto-oscuro);
+            font-size: 0.95rem;
+        }
+
+        .reactions-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+            padding-top: 5px;
+            border-top: 1px dashed var(--rosa-pastel);
+        }
+
+        .react-btn {
+            background: var(--blanco-puro);
+            border: 1px solid var(--azul-pastel);
+            border-radius: 15px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .react-btn.voted {
+            background-color: var(--rosa-pastel);
+            color: white;
+            border-color: var(--rosa-pastel);
+            cursor: not-allowed;
+        }
+
+        /* --- Estilos Sección CURIOSIDADES --- */
+        .curiosidades-lista {
+            list-style: none;
+        }
+
+        .curiosidades-lista li {
+            background-color: var(--fondo-crema);
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 15px;
+            border-left: 5px solid var(--rosa-pastel);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .curiosidades-lista li::before { content: "✨"; }
+
+        /* --- ESTILOS PANEL ADMIN (TABLA RESPONSIVE) --- */
+        .admin-table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: var(--blanco-puro);
+            border-radius: 15px;
+            border: 1px solid #81C784;
+            margin-top: 20px;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.85rem;
+            min-width: 400px; /* Evita que la tabla se colapse en pantallas chicas */
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 12px;
+            border-bottom: 1px solid #E8F5E9;
+        }
+
+        .admin-table th {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .status-online { background: #E8F5E9; color: #2E7D32; }
+        .status-offline { background: #ECEFF1; color: #455A64; }
+
+        .action-btn {
+            background: #81C784;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .action-btn:hover { background: #66BB6A; }
+
+        /* --- MEDIA QUERIES PARA PANTALLAS GRANDES (LAPTOP / PC) --- */
+        @media (min-width: 600px) {
+            body { padding: 20px; }
+            header { padding-top: 0; }
+            header h1 { font-size: 2.5rem; }
+            .logout-btn { right: 10px; top: 10px; transform: none; }
+            nav { gap: 15px; padding: 10px 20px; border-radius: 50px; }
+            nav button { font-size: 1.1rem; }
+            main { padding: 30px; border-radius: 30px; }
+            h2 { font-size: 1.7rem; }
+            
+            /* Ajuste clave para que en Laptop no se distorsione el perfil */
+            .perfil-container { flex-direction: row; text-align: left; gap: 30px; }
+            .avatar-placeholder { width: 150px; height: 150px; font-size: 4rem; }
+            
+            .galeria { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+            .foto-card p { font-size: 1rem; }
+            .curiosidades-lista li { font-size: 1.05rem; }
+            .admin-table { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PANTALLA DE ACCESO -->
+    <div id="login-screen">
+        <h2>Área Privada ✨</h2>
+        
+        <div class="input-group">
+            <label for="username">Correo electrónico:</label>
+            <input type="email" id="username" placeholder="ejemplo@pastel.com">
+        </div>
+
+        <div class="input-group">
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" placeholder="••••••••">
+        </div>
+
+        <div class="captcha-container">
+            <div class="captcha-left">
+                <input type="checkbox" id="robot-check" class="captcha-checkbox">
+                <span class="captcha-text">No soy un robot</span>
+            </div>
+            <div class="captcha-logo">🛡️</div>
+        </div>
+
+        <button class="login-btn" id="btn-entrar">Entrar</button>
+        
+        <!-- ENLACE DE MESSENGER (m.me) -->
+        <a href="https://www.facebook.com/messages/e2ee/t/34862966496684298" target="_blank" class="fb-request-btn">
+            ¿No tienes cuenta? Solicita tu acceso aquí ✨
+        </a>
+
+        <p id="error-msg">Por favor, rellena todos los campos correctamente.</p>
+    </div>
+
+    <!-- CONTENIDO DE LA PÁGINA -->
+    <div id="main-content">
+        <header>
+            <h1>Mi Espacio Pastel ✨</h1>
+            <p>¡Bienvenido a mi pequeño rincón en la web!</p>
+            <button class="logout-btn" id="btn-cerrar-sesion">Salir 🚪</button>
+        </header>
+
+        <nav>
+            <button class="tab-btn active" onclick="openTab(event, 'perfil')">Perfil</button>
+            <button class="tab-btn" onclick="openTab(event, 'fotos')">Fotos</button>
+            <button class="tab-btn" onclick="openTab(event, 'curiosidades')">Curiosidades</button>
+            <button class="tab-btn" onclick="openTab(event, 'visita')">Estado de Cuenta ✨</button>
+        </nav>
+
+        <main>
+            <!-- PERFIL -->
+            <section id="perfil" class="section active">
+                <h2>Sobre Mí</h2>
+                <div class="perfil-container">
+                    <div class="avatar-placeholder">🌸</div>
+                    <div class="info-bio">
+                        <p><strong>Nombre:</strong> Ara Femboy</p>
+                        <p><strong>Gustos:</strong> Jugar Minecraft o Roblos :3.</p>
+                        <p>¡Hola! me gusta la tecnología, por ello me encanta saber todo de ella :3.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FOTOS -->
+            <section id="fotos" class="section">
+                <h2>Mi Galería</h2>
+                <div class="galeria">
+                    <div class="foto-card">
+                        <img src="femboy.jpeg" alt="Ups" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p>¡Ups! ✨</p>
+                        <div class="reactions-container">
+                            <button class="react-btn" onclick="addReaction(this)">❤️ <span class="count">0</span></button>
+                            <button class="react-btn" onclick="addReaction(this)">🔥 <span class="count">0</span></button>
+                        </div>
+                    </div>
+                    <div class="foto-card">
+                        <img src="Femboypies.jpeg" alt="Outfit" style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;">
+                        <p>Outfit de hoy 💜</p>
+                        <div class="reactions-container">
+                            <button class="react-btn" onclick="addReaction(this)">❤️ <span class="count">0</span></button>
+                            <button class="react-btn" onclick="addReaction(this)">🔥 <span class="count">0</span></button>
+                        </div>
+                    </div>
+                    <div class="foto-card">
+                        <video style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;" autoplay loop muted playsinline>
+                            <source src="videosex.mp4" type="video/mp4">
+                        </video>
+                        <p>Mi video corto ✨</p>
+                        <div class="reactions-container">
+                            <button class="react-btn" onclick="addReaction(this)">❤️ <span class="count">0</span></button>
+                            <button class="react-btn" onclick="addReaction(this)">🔥 <span class="count">0</span></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CURIOSIDADES -->
+            <section id="curiosidades" class="section">
+                <h2>Curiosidades sobre mí</h2>
+                <ul class="curiosidades-lista">
+                    <li>Me encantan los colores pasteles, especialmente el morado y el azul cielo.</li>
+                    <li>Prefiero los días lluviosos para quedarme en casa tomando un té.</li>
+                    <li>Tengo una gran afición a la Tecnología.</li>
+                    <li>Me gusta cuidar mucho la estética de mis cosas y de mi entorno.</li>
+                </ul>
+            </section>
+
+            <!-- PERFIL VISITANTE / PANEL ADMIN -->
+            <section id="visita" class="section">
+                <h2>Estado de Cuenta ✨</h2>
+                
+                <!-- TARJETA INVITADOS -->
+                <div id="tarjeta-visitante" style="background: var(--fondo-crema); padding: 20px; border-radius: 20px; border: 2px dashed var(--rosa-pastel); text-align: center; max-width: 100%; width: 340px; margin: 0 auto;">
+                    <div style="width: 80px; height: 80px; background: var(--blanco-puro); border-radius: 50%; border: 3px solid var(--azul-pastel); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto 15px;">☁️</div>
+                    <h3 style="color: var(--rosa-oscuro); margin-bottom: 5px;">@Invitado_Pastel</h3>
+                    <p style="font-size: 0.85rem; font-style: italic; margin-bottom: 15px;">Nivel: Visitante Lindo ✨</p>
+                    <div style="display: flex; justify-content: space-around; background: var(--blanco-puro); padding: 10px; border-radius: 12px; font-size: 0.85rem;">
+                        <div><strong>Reacciones</strong><br>💖 12</div>
+                        <div><strong>Racha</strong><br>🐾 5 días</div>
+                    </div>
+                </div>
+
+                <!-- PANEL COMPLETO ADMINISTRADOR -->
+                <div id="tarjeta-admin" style="display: none; max-width: 100%; width: 600px; margin: 0 auto;">
+                    <!-- Tarjeta de Perfil Admin -->
+                    <div style="background: linear-gradient(135deg, #FFF1F2 0%, #E8F5E9 100%); padding: 20px; border-radius: 20px; border: 3px solid #81C784; text-align: center; box-shadow: 0 5px 15px rgba(129, 199, 132, 0.3); margin-bottom: 20px;">
+                        <div style="width: 80px; height: 80px; background: var(--blanco-puro); border-radius: 50%; border: 3px solid #81C784; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto 15px;">🛠️</div>
+                        <h3 style="color: #2E7D32; margin-bottom: 5px;">@Jorge_Dev</h3>
+                        <p style="font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #388E3C; margin-bottom: 15px;">⚡ Desarrollador Principal ⚡</p>
+                        <div style="display: flex; justify-content: space-around; background: var(--blanco-puro); padding: 10px; border-radius: 12px; font-size: 0.85rem; border: 1px dashed #81C784;">
+                            <div><strong>Proyecto</strong><br>🚀 Activo</div>
+                            <div><strong>Servidor</strong><br>🟢 Online</div>
+                        </div>
+                    </div>
+
+                    <!-- HERRAMIENTA: CONTROL DE USUARIOS -->
+                    <h3 style="color: #2E7D32; margin-top: 25px; font-size: 1.2rem;">👥 Gestión de Usuarios Registrados</h3>
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Estado</th>
+                                    <th>Nivel Actual</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>amigo_pastel01</td>
+                                    <td><span class="status-badge status-online">🟢 En línea</span></td>
+                                    <td id="nivel-user-1">Visitante Lindo ✨</td>
+                                    <td><button class="action-btn" onclick="subirNivel('nivel-user-1')">⚡ Subir</button></td>
+                                </tr>
+                                <tr>
+                                    <td>usuario_test</td>
+                                    <td><span class="status-badge status-offline">⚫ Offline</span></td>
+                                    <td id="nivel-user-2">Visitante Lindo ✨</td>
+                                    <td><button class="action-btn" onclick="subirNivel('nivel-user-2')">⚡ Subir</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- SCRIPTS DE FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDFbkFJfRYp3JerAyLTyz_AOi3Ezs3PGH4",
+            authDomain: "misitiopastel.firebaseapp.com",
+            projectId: "misitiopastel",
+            storageBucket: "misitiopastel.firebasestorage.app",
+            messagingSenderId: "686082794861",
+            appId: "1:686082794861:web:e34c3102d7f26d37b2e664",
+            measurementId: "G-0NVHMHLDRQ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Login
+        document.getElementById('btn-entrar').addEventListener('click', async () => {
+            const email = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const isRobotChecked = document.getElementById('robot-check').checked;
+            const errorMsg = document.getElementById('error-msg');
+
+            if (!isRobotChecked) {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = "Debes verificar que no eres un robot 🤖.";
+                return;
+            }
+
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'flex';
+                errorMsg.style.display = 'none';
+
+                // DETECCIÓN DE ADMINISTRADOR
+                // ⚠️ REEMPLAZA EL CORREO DE ABAJO POR EL TUYO DE FIREBASE ⚠️
+                const correoAdmin = "administrador@pastel.com"; 
+
+                if (email.toLowerCase() === correoAdmin.toLowerCase()) {
+                    document.getElementById('tarjeta-visitante').style.display = 'none';
+                    document.getElementById('tarjeta-admin').style.display = 'block';
+                } else {
+                    document.getElementById('tarjeta-visitante').style.display = 'block';
+                    document.getElementById('tarjeta-admin').style.display = 'none';
+                }
+
+            } catch (error) {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = "Acceso denegado. Datos incorrectos ❌.";
+            }
+        });
+
+        // Logout
+        document.getElementById('btn-cerrar-sesion').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                
+                document.getElementById('username').value = "";
+                document.getElementById('password').value = "";
+                document.getElementById('robot-check').checked = false;
+
+                const reactionButtons = document.querySelectorAll('.react-btn');
+                reactionButtons.forEach(btn => {
+                    btn.classList.remove('voted');
+                    btn.disabled = false;
+                });
+
+                document.getElementById('tarjeta-admin').style.display = 'none';
+                document.getElementById('tarjeta-visitante').style.display = 'block';
+                document.getElementById('main-content').style.display = 'none';
+                document.getElementById('login-screen').style.display = 'flex';
+            } catch (error) {
+                console.error("Error al cerrar sesión", error);
+            }
+        });
+    </script>
+
+    <script>
+        function openTab(evt, tabName) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => button.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        function addReaction(button) {
+            if (button.classList.contains('voted')) return;
+
+            const countSpan = button.querySelector('.count');
+            countSpan.textContent = parseInt(countSpan.textContent) + 1;
+
+            button.classList.add('voted');
+            button.disabled = true;
+        }
+
+        // LÓGICA SIMULADA PARA SUBIR NIVEL
+        function subirNivel(idElemento) {
+            const tdNivel = document.getElementById(idElemento);
+            if (tdNivel.textContent === "Visitante Lindo ✨") {
+                tdNivel.innerHTML = "<strong style='color: #FF8B94;'>Visitante Supremo 👑</strong>";
+                alert("¡Nivel actualizado con éxito!");
+            } else {
+                alert("Este usuario ya está en su nivel máximo.");
+            }
+        }
+    </script>
+</body>
+</html>
